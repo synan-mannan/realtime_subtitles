@@ -1,13 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Realtime Subtitles</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      margin-right: 10rem;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+    }
+    .input {
+      margin-bottom: 20px;
+    }
+    #startBtn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      margin-right: 5rem;
+    }
+    #startBtn:hover {
+      background: #e16f6f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    #stopBtn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    #stopBtn:hover {
+      background: #e16f6f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    #output {
+      font-size: 1.1em;
+      margin-top: 15px;
+      color: #e0e0e0;
+    }
+    .output_class {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 20px;
+      min-height: 100px;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .output_class p {
+      margin: 10px 0;
+      font-size: 1.1em;
+      line-height: 1.4;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   <h2>Realtime Speech to Text</h2>
   <div class="container">
     <div class="input">
       <button id="startBtn">Start</button>
+      <button id="stopBtn">Stop</button>
       <p id="output">Waiting for speech...</p>
     </div>
     <div class="output_class">
@@ -15,8 +105,7 @@
     </div>
   </div>
 
-
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-  <script src = "index.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>

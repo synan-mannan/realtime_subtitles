@@ -1,11 +1,17 @@
 const socket = io("http://localhost:5000");
     const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const output = document.getElementById("output");
     const outputclass = document.querySelector(".output_class")
     const staticoutput = document.querySelector(".staticout")
     let audioContext, processor, input;
+    let lastSubtitle = "";
 
     startBtn.onclick = async () => {
       if (!audioContext) {
+        // Clear previous subtitles
+        outputclass.innerHTML = "";
+        lastSubtitle = "";
         audioContext = new (window.AudioContext || window.webkitAudioContext)({sampleRate: 16000});
         const stream = await navigator.mediaDevices.getUserMedia({audio: true});
         input = audioContext.createMediaStreamSource(stream);
@@ -23,13 +29,23 @@ const socket = io("http://localhost:5000");
         output.textContent = "🎙 Listening...";
       }
     };
-    let outputlength;
+
+    stopBtn.onclick = () => {
+      if (audioContext) {
+        audioContext.close();
+        audioContext = null;
+        processor = null;
+        input = null;
+        output.textContent = "Stopped.";
+      }
+    };
+
     socket.on('subtitle', (data) => {
-        let output = document.createElement('p')
-        // outputlength = data.text.length
-        if(data.text.length > output.innerText.length){
-            output.textContent = data.text || "...";
-            outputclass.appendChild(output)
+        if (data.text && data.text !== lastSubtitle && data.text.trim() !== "") {
+            lastSubtitle = data.text;
+            let output = document.createElement('p');
+            output.textContent = data.text;
+            outputclass.appendChild(output);
         }
     });
 

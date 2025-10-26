@@ -20,13 +20,15 @@ def handle_audio(data):
         result = json.loads(rec.Result())
         text = result.get("text", "")
         emit('subtitle', {'text': text})
-    else:
-        partial = json.loads(rec.PartialResult())
-        emit('subtitle', {'text': partial.get("partial", "")})
+    # else:
+    #     partial = json.loads(rec.PartialResult())
+    #     emit('subtitle', {'text': partial.get("partial", "")})
 
 @app.route('/')
 def index():
     return "Speech-to-Text server is running."
+
+
 
 if __name__ == '__main__':
     print("🚀 Server running on http://localhost:5000")
