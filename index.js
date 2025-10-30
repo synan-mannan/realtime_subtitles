@@ -4,18 +4,27 @@ const socket = io("http://localhost:5000");
     const output = document.getElementById("output");
     const outputclass = document.querySelector(".output_class")
     const staticoutput = document.querySelector(".staticout")
+    const languageSelect = document.getElementById("languageSelect");
     let audioContext, processor, input;
     let lastSubtitle = "";
 
     startBtn.onclick = async () => {
       if (!audioContext) {
+        const selectedLanguage = languageSelect.value;
+        if (!selectedLanguage) {
+          alert("Please select a language first.");
+          return;
+        }
+        // Send language to server
+        socket.emit('start_recording', { language: selectedLanguage });
+
         // Clear previous subtitles
         outputclass.innerHTML = "";
         lastSubtitle = "";
         audioContext = new (window.AudioContext || window.webkitAudioContext)({sampleRate: 16000});
         const stream = await navigator.mediaDevices.getUserMedia({audio: true});
         input = audioContext.createMediaStreamSource(stream);
-        processor = audioContext.createScriptProcessor(4096, 1, 1);
+        processor = audioContext.createScriptProcessor(8192, 1, 1);
 
         processor.onaudioprocess = (e) => {
           const float32Array = e.inputBuffer.getChannelData(0);
@@ -41,7 +50,7 @@ const socket = io("http://localhost:5000");
     };
 
     socket.on('subtitle', (data) => {
-        if (data.text && data.text !== lastSubtitle && data.text.trim() !== "") {
+        if (data.text && data.text !== lastSubtitle ) {
             lastSubtitle = data.text;
             let output = document.createElement('p');
             output.textContent = data.text;
@@ -67,3 +76,4 @@ const socket = io("http://localhost:5000");
       for (let i = 0; i < len; i++) binary += String.fromCharCode(bytes[i]);
       return btoa(binary);
     }
+    

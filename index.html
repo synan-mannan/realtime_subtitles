@@ -22,7 +22,7 @@
       margin-bottom: 30px;
       font-size: 2.5em;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-      margin-right: 10rem;
+      margin-right: 4rem;
     }
     .container {
       background: rgba(255, 255, 255, 0.1);
@@ -34,27 +34,39 @@
       width: 90%;
       text-align: center;
     }
+    .language-selector {
+      margin-bottom: 20px;
+    }
+    .language-selector label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .language-selector select {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      cursor: pointer;
+    }
+    .language-selector select:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.5);
+    }
     .input {
       margin-bottom: 20px;
     }
-    #startBtn {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      margin-right: 5rem;
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
     }
-    #startBtn:hover {
-      background: #e16f6f;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
-    #stopBtn {
+    #startBtn, #stopBtn {
       background: #4CAF50;
       color: white;
       border: none;
@@ -65,8 +77,8 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    #stopBtn:hover {
-      background: #e16f6f;
+    #startBtn:hover, #stopBtn:hover {
+      background: #45a049;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
@@ -89,17 +101,33 @@
       font-size: 1.1em;
       line-height: 1.4;
       color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 4px solid #4CAF50;
     }
+    /* .languageSelect:hover{
+      background-color: #a5a4a4;
+    } */
   </style>
 </head>
 <body>
   <h2>Realtime Speech to Text</h2>
   <div class="container">
-    <div class="input">
-      <button id="startBtn">Start</button>
-      <button id="stopBtn">Stop</button>
-      <p id="output">Waiting for speech...</p>
+    <div class="language-selector">
+      <label for="languageSelect">Choose Language:</label>
+      <select id="languageSelect" name="language">
+        <option value="">— Select Language —</option>
+        <option value="english">🇺🇸 English</option>
+        <option value="hindi">🇮🇳 Hindi</option>
+      </select>
     </div>
+    
+    <div class="button-group">
+      <button id="startBtn">🎙 Start</button>
+      <button id="stopBtn">⏹ Stop</button>
+    </div>
+    <p id="output">Waiting for speech...</p>
     <div class="output_class">
       <div class="staticout"></div>
     </div>
